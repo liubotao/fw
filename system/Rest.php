@@ -39,7 +39,6 @@ class Rest {
         $this->curl_opt['FRESH_CONNECT'] = true; //强制获取一个新的连接，替代缓存中的连接。
     }
 
-    //连接请求服务器
     public function connect($server_url = null) {
         if ($server_url == null) {
             return $this->server_url;
@@ -50,7 +49,6 @@ class Rest {
         return $this;
     }
 
-    //判断链接地址是否存在
     public static function checkUrlExist($url) {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_NOBODY, true); // set to HEAD request
@@ -61,7 +59,6 @@ class Rest {
         return $valid;
     }
 
-    //获取请求地址头文件编码
     public static function retrieveHeaderCode($url) {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_NOBODY, true); // set to HEAD request
@@ -72,7 +69,6 @@ class Rest {
         return $code;
     }
 
-    //请求/获取超时时间
     public function timeout($sec = null) {
         if ($sec === null) {
             return $this->curl_opt['TIMEOUT'];
@@ -82,7 +78,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取REST请求数据
     public function data($data = null) {
         if ($data == null) {
             return $this->args;
@@ -95,7 +90,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取REST请求options
     public function options($optArr = null) {
         if ($optArr == null) {
             return $this->curl_opt;
@@ -104,7 +98,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取REST请求的报警时间
     public function requestWarnTime($time = null) {
         if ($time == null) {
             return $this->request_warn_time;
@@ -113,7 +106,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取REST请求头部
     public function header($headerArr = null) {
         if ($headerArr == null) {
             return $this->curl_opt['HTTPHEADER'];
@@ -126,7 +118,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取HTTP头字段$this->setAccept(Rest::JSON)
     public function accept($type = null) {
         if ($type === null) {
             if (isset($this->curl_opt['HTTPHEADER']) && $this->curl_opt['HTTPHEADER'][0]) {
@@ -139,7 +130,6 @@ class Rest {
         return $this;
     }
 
-    //设置/获取HTTP头字段$this->setContentType(Rest::JSON)
     public function contentType($type = null) {
         if ($type == null) {
             if (isset($this->curl_opt['HTTPHEADER']) && $this->curl_opt['HTTPHEADER'][0]) {
