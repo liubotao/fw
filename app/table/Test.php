@@ -9,7 +9,10 @@ class Table_Test extends DB_Table {
     }
 
     public function findByNickname() {
-        return $this->select("*")->where('id', 1)->first();
+       $result = $this->select("*")->where('id', 1)->get();
+        var_dump(DB::getQueryLog());
+        return $result;
+
     }
 
 }

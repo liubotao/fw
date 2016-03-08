@@ -28,6 +28,8 @@ class DB_Table {
 
     private $fetchColumn = false;
 
+    private $enableLogQuery = false;
+
     private $bindings = array(
             'update' => array(),
             'where' => array(),
@@ -44,8 +46,8 @@ class DB_Table {
     );
 
     public function __construct() {
-        $config = Config::get("database." . $this->database);
-
+        $databaseConfig = Config::get("database" );
+        $config = $databaseConfig[$this->database];
         $username = $config['username'];
         $password = $config['password'];
         $charset = isset($config['charset']) ? $config['charset'] : 'utf8';
@@ -65,8 +67,12 @@ class DB_Table {
         $query = "set names '$charset'" .
                 (!is_null($collation) ? " collate '$collation'" : '');
         $this->pdo->prepare($query)->execute();
-
         $this->table = $prefix . $this->table;
+
+        $enableLogQuery = isset($databaseConfig['enableLogQuery']) ? $databaseConfig['enableLogQuery'] : false;
+        if ($enableLogQuery) {
+            $this->enableLogQuery();
+        }
     }
 
     private function getDsn($config) {
@@ -182,7 +188,7 @@ class DB_Table {
     }
 
     public function get() {
-        $query = " SELECT {$this->selectExpr} from $this->table";
+        $query = " SELECT {$this->selectExpr} from $this->table ";
 
         $query .= $this->appendJoinCondition();
         $query .= $this->appendWhereCondition();
@@ -250,8 +256,8 @@ class DB_Table {
             $bind = array_merge($bind, $v);
         }
 
-        DB::addSQL($query, $bind);
         $query = ltrim($query);
+        $start_time = microtime(true);
         try {
             $sth = $this->pdo->prepare($query);
             $sth->execute($bind);
@@ -260,8 +266,13 @@ class DB_Table {
             return $result;
         }
 
-        $type = trim(strtoupper(substr(trim($query), 0, strpos($query, " "))));
+        $end_time = microtime(true);
+        $executeTime = round(($end_time - $start_time) * 1000);
+        if ($this->enableLogQuery) {
+            $this->logQuery($query, $bind, $executeTime);
+        }
 
+        $type = trim(strtoupper(substr(trim($query), 0, strpos($query, " "))));
         switch ($type) {
             case 'INSERT':
             case 'REPLACE':
@@ -286,8 +297,14 @@ class DB_Table {
         }
 
         $this->clear();
-
         return $result;
+    }
+
+    private function enableLogQuery() {
+        $this->enableLogQuery = true;
+    }
+    private function logQuery($query, $bindings, $time) {
+        DB::$queryLog[] = compact('query', 'bindings', 'time');
     }
 
     private function clear() {

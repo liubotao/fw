@@ -2,7 +2,7 @@
 
 class DB {
 
-    public static $sqls = array();
+    public static $queryLog = array();
 
     public static $tables = array();
 
@@ -15,17 +15,12 @@ class DB {
         return self::$tables[$tableName];
     }
 
-    public static function addSQL($query, $data) {
-        if ($data) {
-            foreach ($data as $v) {
-                $query = str_replace("?", "'" . $v . "'", $query);
-            }
-        }
-        self::$sqls[] = $query;
+    public static function flushQueryLog() {
+        self::$queryLog = array();
     }
 
-    public static function getSQL() {
-        var_dump(self::$sqls);
+    public static function getQueryLog() {
+        return self::$queryLog;
     }
 
 }
