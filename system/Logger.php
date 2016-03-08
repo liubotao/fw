@@ -2,8 +2,7 @@
 
 class Logger {
 
-    public static $logType = self::LOG_TYPE_SIMPLE;
-
+    public static $logType;
     public static $file;
 
     const LOG_TYPE_FILE   = 0;
