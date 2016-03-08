@@ -261,8 +261,8 @@ class DB_Table {
         try {
             $sth = $this->pdo->prepare($query);
             $sth->execute($bind);
-        } catch (PDOException $e) {
-            var_dump("sql" . $query . "error" . $e->getMessage());
+        } catch (Exception $e) {
+            Logger::error("Query Fail, SQL[".$query."] Error:".$e->getMessage());
             return $result;
         }
 

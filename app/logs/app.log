@@ -12,3 +12,7 @@
 2016-03-08 16:33:06|ERROR|something was wrong
 2016-03-08 16:35:44|ERROR|something was wrong
 2016-03-08 16:35:59|ERROR|something was wrong
+2016-03-08 18:28:37|ERROR|Query Fail, SQL:SELECT *ss from cms_article  WHERE id = ? ErrorSQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ss from cms_article  WHERE id = ?' at line 1
+2016-03-08 18:29:20|ERROR|Query Fail, SQL:SELECT *ss from cms_article  WHERE id = ? Error:SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ss from cms_article  WHERE id = ?' at line 1
+2016-03-08 18:29:55|ERROR|Query Fail, SQL[SELECT *ss from cms_article  WHERE id = ?] Error:SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ss from cms_article  WHERE id = ?' at line 1
+2016-03-08 18:30:01|ERROR|Query Fail, SQL[SELECT *ss from cms_article  WHERE id = ?] Error:SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ss from cms_article  WHERE id = ?' at line 1
