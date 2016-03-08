@@ -52,18 +52,18 @@ class ClassLoader {
 
     private static $systemClasses = array(
             'Application' => "Application.php",
-            'Config' => 'Config.php',
-            'Controller' => 'Controller.php',
-            'DB' => 'DB.php',
-            'DB_Table' => "db/Table.php",
-            'File' => 'File.php',
-            'Log' => 'Log.php',
-            'Page' => 'Page.php',
-            'Request' => 'Request.php',
-            'Response' => 'Response.php',
-            'Rest' => 'Rest.php',
-            'Router' => 'Router.php',
-            'View' => 'View.php',
+            'Config'      => 'Config.php',
+            'Controller'  => 'Controller.php',
+            'DB'          => 'DB.php',
+            'DB_Table'    => "db/Table.php",
+            'File'        => 'File.php',
+            'Logger'      => 'Logger.php',
+            'Page'        => 'Page.php',
+            'Request'     => 'Request.php',
+            'Response'    => 'Response.php',
+            'Rest'        => 'Rest.php',
+            'Router'      => 'Router.php',
+            'View'        => 'View.php',
     );
 
 

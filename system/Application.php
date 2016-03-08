@@ -44,7 +44,7 @@ class Application {
         }
 
         Config::init();
-        Log::init();
+        Logger::init();
         register_shutdown_function(array($this, "shutdown"));
     }
 
