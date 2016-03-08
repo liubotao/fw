@@ -19,7 +19,7 @@ class Logger {
     public static function init() {
         $config = Config::get("application.logger");
         self::$logType = isset($config['logType']) ? $config['logType'] : self::LOG_TYPE_SIMPLE;
-        self::$file = isset($config['file']) ? $config['file'] : APP_PATH.DS."logs".DS."app.log";
+        self::$file    = isset($config['file']) ? $config['file'] : APP_PATH.DS."logs".DS."app.log";
     }
 
     public static function setLogType($logType) {
@@ -49,7 +49,7 @@ class Logger {
         self::$file = $file;
     }
 
-    public static function output($logType, $msg) {
+    private static function output($logType, $msg) {
         switch (self::$logType) {
             case self::LOG_TYPE_FILE:
                 $msg = date("Y-m-d H:i:s")."|".self::$logString[$logType]."|".$msg;
