@@ -7,7 +7,7 @@ $base_uri = DIRECTORY_SEPARATOR == '/' ? dirname($_SERVER["SCRIPT_NAME"]) : str_
 define("BASE_URI", $base_uri == '/' ? '' : $base_uri);
 define('DS', DIRECTORY_SEPARATOR);
 unset($base_uri);
-define('APP_NAME', 'mobile-api');
+define('APP_NAME', 'SHOP');
 define('APP_PATH', realpath(dirname(__FILE__)) . '/../');
 define('SYS_PATH', APP_PATH . "../system/");
 define('SYS_EXT_PATH', APP_PATH . "../system-ext/");
