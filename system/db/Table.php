@@ -46,7 +46,7 @@ class DB_Table {
     );
 
     public function __construct() {
-        $databaseConfig = Config::get("database" );
+        $databaseConfig = Config::get("database");
         $config = $databaseConfig[$this->database];
         $username = $config['username'];
         $password = $config['password'];
@@ -162,6 +162,39 @@ class DB_Table {
         return $this->exec($query, $this->bindings);
     }
 
+    public function insert(array $values) {
+        if (empty($values)) {
+            return true;
+        }
+
+        if (!is_array(reset($values))) {
+            $values = array($values);
+        } else {
+            foreach ($values as $key => $value) {
+                ksort($value);
+                $values[$key] = $value;
+            }
+        }
+
+        $bindings = array();
+        foreach ($values as $record) {
+            foreach ($record as $value) {
+                $bindings[] = $value;
+            }
+        }
+
+        $columns = implode(",", array_keys(reset($values)));
+        $parameters = array();
+        foreach ($values as $recode) {
+            $parameters[] = '(' . implode(",", array_fill(0, count($recode), "?")) . ')';
+        }
+
+        $parameters = implode(', ', $parameters);
+        $query = "INSERT INTO $this->table ($columns) values $parameters ";
+
+        return $this->exec($query, $bindings);
+    }
+
     public function update($params) {
         $query = "UPDATE $this->table SET ";
         foreach ($params as $key => $value) {
@@ -253,7 +286,11 @@ class DB_Table {
         $result = false;
         $bind = array();
         foreach ($bindings as $v) {
-            $bind = array_merge($bind, $v);
+            if (is_array($v)) {
+                $bind = array_merge($bind, $v);
+            } else {
+                $bind[] = $v;
+            }
         }
 
         $query = ltrim($query);
@@ -262,7 +299,7 @@ class DB_Table {
             $sth = $this->pdo->prepare($query);
             $sth->execute($bind);
         } catch (Exception $e) {
-            Logger::error("Query Fail, SQL[".$query."] Error:".$e->getMessage());
+            Logger::error("Query Fail, SQL[" . $query . "] Error:" . $e->getMessage());
             return $result;
         }
 
@@ -303,6 +340,7 @@ class DB_Table {
     private function enableLogQuery() {
         $this->enableLogQuery = true;
     }
+
     private function logQuery($query, $bindings, $time) {
         DB::$queryLog[] = compact('query', 'bindings', 'time');
     }
