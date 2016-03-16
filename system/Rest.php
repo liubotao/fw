@@ -1,7 +1,5 @@
 <?php
 
-// 请求第三方服务客户端
-
 class Rest {
 
     protected $server_url;
